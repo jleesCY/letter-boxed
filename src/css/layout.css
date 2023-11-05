@@ -12,8 +12,13 @@
 }
 
 .body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: auto;
-  margin-top: 10em;
+  gap: 5vh;
+  margin-top: 3vh;
 }
 
 .puzzleBox {
@@ -90,7 +95,27 @@
   align-self: center;
   justify-content: center;
   font-family: scp;
-  font-size: 20pt;
+  font-size: 2em;
   color: black;
   user-select: none;
+}
+
+.words {
+  font-family: scp;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.active-word {
+  all: unset;
+  font-size: 2em;
+  border-bottom: 2px solid black;
+  text-align: center;
+}
+
+.past-words {
+  font-size: 1.2em;
+  height: 1em;
 }

@@ -1,83 +1,83 @@
 import "../css/layout.css"
 import "../css/themes.css"
 import { useParams } from 'react-router-dom'
+import PuzzleBox from './PuzzleBox'
+import GeneratePuzzle from "./GeneratePuzzle"
+import { useState } from "react"
+import words from "../assets/words.json"
+
+let validLetterToType = (e, data) => {
+  let char = e.target.value[e.target.value.length - 1].toUpperCase()
+  let letterIdx = data.letters.indexOf(char)
+  if (letterIdx != -1 && e.target.value.length <= 1) {
+    return true
+  }
+  if (e.target.value.length > 1) {
+    if (Math.floor(letterIdx / 3) == Math.floor(data.letters.indexOf(e.target.value[e.target.value.length - 2]) / 3)) {
+      return false
+    }
+    return true
+  }
+  return false
+}
 
 export default function Puzzle() {
+
+  const [letterToStart, setLetterToStart] = useState("")
+
   const { id } = useParams();
-  let data2x2 = "ABCDEFGH";
-  let data3x3 = "ISUWTQARCDHE";
-  let data4x4 = "ABCDEFGHIJKLMNOP";
-  let d = {x: 3, y: 3}
+  let data = null;
+  try {
+    data = require(`../assets/puzzles/${id}.json`);
+  }
+  catch {
+    if (id == "random") {
+      data = GeneratePuzzle()
+    }
+    else {
+      return(
+        <>
+        Puzzle '{id}' does not exist
+        </>
+      );
+    }
+  }
   
   return(
   <>
     <div className="theme light">
       <div className="container" draggable="false">
-        <div className="header">Puzzle {id}</div>
+        <div className="header">{data.name}</div>
         <div className="body">
-          <div className="puzzleBox">
-            <div></div>
-            <div className="top">
-              <div className="node">
-                <div className="circle"></div>
-                <div className="letter">{data3x3[0]}</div>
-              </div>
-              <div className="node">
-                <div className="circle"></div>
-                <div className="letter">{data3x3[1]}</div>
-              </div>
-              <div className="node">
-                <div className="circle"></div>
-                <div className="letter">{data3x3[2]}</div>
-              </div>
-            </div>
-            <div></div>
-            <div className="left">
-              <div className="node">
-                <div className="circle"></div>
-                <div className="letter">{data3x3[3]}</div>
-              </div>
-              <div className="node">
-                <div className="circle"></div>
-                <div className="letter">{data3x3[4]}</div>
-              </div>
-              <div className="node">
-                <div className="circle"></div>
-                <div className="letter">{data3x3[5]}</div>
-              </div>
-            </div>
-            <div className="connectBox"></div>
-            <div className="right">
-              <div className="node">
-                <div className="circle"></div>
-                <div className="letter">{data3x3[6]}</div>
-              </div>
-              <div className="node">
-                <div className="circle"></div>
-                <div className="letter">{data3x3[7]}</div>
-              </div>
-              <div className="node">
-                <div className="circle"></div>
-                <div className="letter">{data3x3[8]}</div>
-              </div>
-            </div>
-            <div></div>
-            <div className="bottom">
-              <div className="node">
-                <div className="circle"></div>
-                <div className="letter">{data3x3[9]}</div>
-              </div>
-              <div className="node">
-                <div className="circle"></div>
-                <div className="letter">{data3x3[10]}</div>
-              </div>
-              <div className="node">
-                <div className="circle"></div>
-                <div className="letter">{data3x3[11]}</div>
-              </div>
-            </div>
-            <div></div>
+          <div className="words">
+            <input className="active-word" defaultValue={letterToStart} onChange={(e) => {
+              if (e.target.value != "") {
+                if (!validLetterToType(e, data)) {
+                  e.target.value = e.target.value.slice(0,e.target.value.length - 1)
+                }
+                // valid letter, so update stuff
+                else {
+                  e.target.value = e.target.value.toUpperCase()
+
+
+
+
+
+                }
+              }
+            }} onKeyDown={(e) => {
+              if (e.key == 'Enter') {
+                if (words.includes(e.target.value)) {
+                  console.log(`${e.target.value} is a word`)
+                }
+                else {
+                  console.log(`${e.target.value} is NOT a word`)
+                }
+              }
+            }}/>
+            <div className="past-words"></div>
           </div>
+          <PuzzleBox letters={data.letters} rows={data.dimensions.rows} columns={data.dimensions.columns}></PuzzleBox>
         </div>
       </div>
     </div>

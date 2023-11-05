@@ -1,0 +1,8 @@
+{
+  "name": "3x3 Test",
+  "letters": "ABCDEFGHIJKL",
+  "dimensions": {
+    "rows": 3,
+    "columns": 3
+  }
+}

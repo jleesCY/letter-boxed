@@ -1,0 +1,8 @@
+{
+  "name": "4x4 test",
+  "letters": "ABCDEFGHIJKLMNOP",
+  "dimensions": {
+    "rows": 4,
+    "columns": 4
+  }
+}
