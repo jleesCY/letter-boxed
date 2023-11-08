@@ -159,6 +159,10 @@ export default function Puzzle() {
           </div>
           <PuzzleBox letters={data.letters} rows={data.dimensions.rows} columns={data.dimensions.columns}></PuzzleBox>
         </div>
+        <div className="footer">
+          <div>Version 0.1</div>
+          <div>Dictionary: <strong>{words.length.toLocaleString('en-US')}</strong> words</div>
+        </div>
         <div id="popup" className="disabled">
           <h3>You Won!</h3>
           <p>The two-word solution was:</p>

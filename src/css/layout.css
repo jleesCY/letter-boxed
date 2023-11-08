@@ -21,6 +21,18 @@
   margin-top: 3vh;
 }
 
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.25em;
+  border-top: 2px solid black;
+}
+
+.footer div{
+  margin: 0
+}
+
 .puzzle-list {
   border-bottom: 1px solid black;
   width: auto;

@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import "../css/layout.css"
 import "../css/themes.css"
+import words from "../assets/words-guessable.json"
 
 export default function Puzzles() {
   return(
@@ -25,6 +26,10 @@ export default function Puzzles() {
             <tbody>
             </tbody>
           </table>
+        </div>
+        <div className="footer">
+          <div>Version 0.1</div>
+          <div>Dictionary: <strong>{words.length.toLocaleString('en-US')}</strong> words</div>
         </div>
       </div>
     </div>
