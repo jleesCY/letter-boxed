@@ -160,6 +160,21 @@
   height: 1em;
 }
 
+.lower-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 80%;
+}
+
+.lower-buttons button {
+  all:unset;
+  border: 1px solid black;
+  padding: 0.2em;
+  border-radius: 10em;
+  cursor: pointer;
+}
+
 #popup {
   background-color: red;
   width: 90vw;

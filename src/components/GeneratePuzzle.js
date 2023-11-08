@@ -84,13 +84,14 @@ function shuffleArray(arr) {
 
 let count = 0; 
 
-export default function GeneratePuzzle(json) {
+export default function GeneratePuzzle(n) {
   const verbose = false;
   
   const [w1, w2, sideAssignments] = sample(words, verbose);
 
   return({
-    name: w1.toUpperCase() + "-" + w2.toUpperCase(), 
+    name: n,
+    solution: w1.toUpperCase() + "-" + w2.toUpperCase(), 
     letters: Object.entries(sideAssignments).sort((a, b) => a[1] - b[1]).map(item => item[0].toUpperCase()).join(''),
     dimensions: {
       rows: 3,

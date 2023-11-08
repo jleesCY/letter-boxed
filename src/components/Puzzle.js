@@ -8,6 +8,7 @@ import Xarrow from "react-xarrows"
 import { createRoot } from 'react-dom/client';
 import Popup from 'react-animated-popup'
 import { useState } from "react"
+import * as CryptoJS from "crypto-js"
 
 let validLetterToType = (char, e, data, lettersTyped) => {
   let letterIdx = data.letters.indexOf(char)
@@ -74,7 +75,11 @@ export default function Puzzle() {
   }
   catch {
     if (id == "random") {
-      data = GeneratePuzzle()
+      data = GeneratePuzzle("Random Puzzle")
+    }
+    else if (id.startsWith("share=")) {
+      let recv = CryptoJS.enc.Base64.parse(decodeURIComponent(id.split("=")[1])).toString(CryptoJS.enc.Utf8)
+      data = JSON.parse(recv)
     }
     else {
       return(
@@ -96,7 +101,7 @@ export default function Puzzle() {
   <>
     <div className="theme light">
       <div className="container" draggable="false">
-        <div className="header">Random Puzzle</div>
+        <div className="header">{data.name}</div>
         <div className="body">
           <div className="words">
             <input className="active-word" onKeyDown={(e) => {
@@ -158,6 +163,12 @@ export default function Puzzle() {
             <div className="past-words"></div>
           </div>
           <PuzzleBox letters={data.letters} rows={data.dimensions.rows} columns={data.dimensions.columns}></PuzzleBox>
+          <div className="lower-buttons">
+            <button onClick={(e) => {
+              let enc = encodeURIComponent(CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(data))))
+              navigator.clipboard.writeText(document.location.origin + '/puzzles/share=' + enc);
+            }}>Share Puzzle</button>
+          </div>
         </div>
         <div className="footer">
           <div>Version 0.1</div>
@@ -166,7 +177,7 @@ export default function Puzzle() {
         <div id="popup" className="disabled">
           <h3>You Won!</h3>
           <p>The two-word solution was:</p>
-          <p><strong>{data.name}</strong></p>
+          <p><strong>{data.solution}</strong></p>
           <button onClick={(e) => {
             e.target.parentElement.classList.remove("enabled")
             e.target.parentElement.classList.add("disabled")
