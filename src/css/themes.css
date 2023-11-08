@@ -6,4 +6,60 @@
 
 .light {
   background-color: rgb(208, 177, 255);
+  color: black;
+}
+
+.light .header {
+  border-bottom: 2px solid black
+}
+
+.light .connectBox {
+  background-color: white;
+}
+
+.light .circle {
+  background-color: rgb(208, 177, 255);
+}
+
+.light .active {
+  font-weight: bold;
+}
+.light .active .circle {
+  background-color: rgb(172, 49, 172);
+}
+
+.light .past {
+  color: rgb(100, 100, 100);
+}
+.light .past .circle {
+  border-color: rgb(100, 100, 100);
+  background-color: rgb(163, 138, 199)
+}
+
+.light #popup {
+  background-color: rgb(190, 146, 255);
+}
+
+
+
+
+
+
+.dark {
+  background-color: rgb(38, 29, 53);
+  color: white;
+}
+
+.dark .header {
+  border-bottom: 2px solid white
+}
+
+.dark .connectBox {
+  background-color: rgb(39, 39, 39);
+  border-color: white
+}
+
+.dark .circle {
+  background-color: rgb(38, 29, 53);
+  border-color: white;
 }

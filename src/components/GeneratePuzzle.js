@@ -81,12 +81,14 @@ function shuffleArray(arr) {
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
 }
-const verbose = true;
 
-let count = 0;
-const [w1, w2, sideAssignments] = sample(words, verbose);
+let count = 0; 
 
-export default function GeneratePuzzle() {
+export default function GeneratePuzzle(json) {
+  const verbose = false;
+  
+  const [w1, w2, sideAssignments] = sample(words, verbose);
+
   return({
     name: w1.toUpperCase() + "-" + w2.toUpperCase(), 
     letters: Object.entries(sideAssignments).sort((a, b) => a[1] - b[1]).map(item => item[0].toUpperCase()).join(''),
