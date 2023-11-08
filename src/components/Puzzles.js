@@ -30,6 +30,14 @@ export default function Puzzles() {
             <tbody>
             </tbody>
           </table>
+          <div className="in-development">
+            <h3>Features in development:</h3>
+            <ul>
+              <li>Mobile Support</li>
+              <li>Custom Puzzle Builder</li>
+              <li>Non-Square Puzzles</li>
+            </ul>
+          </div>
         </div>
         <div className="footer">
           <div>Version 0.2.1</div>
