@@ -8,7 +8,7 @@ export default function MobileLanding() {
       <div className="container">
         <div className="header">oops...</div>
         <div className="body">
-          <p style={{margin:0}}>Android is not supported yet...</p>
+          <p style={{margin:0}}>Mobile is not supported yet...</p>
           <p style={{margin:0}}>Try again on a desktop browser</p>
         </div>
       </div>
