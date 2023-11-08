@@ -34,6 +34,7 @@ export default function Puzzles() {
             <h3>Features in development:</h3>
             <ul>
               <li>Mobile Support</li>
+              <li>Color Themes</li>
               <li>Daily Puzzles</li>
               <li>Custom Puzzle Builder</li>
               <li>Non-Square Puzzles</li>
