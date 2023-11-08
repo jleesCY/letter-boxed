@@ -9,6 +9,7 @@ import { createRoot } from 'react-dom/client';
 import Popup from 'react-animated-popup'
 import { useState } from "react"
 import * as CryptoJS from "crypto-js"
+import { NavLink } from "react-router-dom"
 
 let validLetterToType = (char, e, data, lettersTyped) => {
   let letterIdx = data.letters.indexOf(char)
@@ -101,7 +102,14 @@ export default function Puzzle() {
   <>
     <div className="theme light">
       <div className="container" draggable="false">
-        <div className="header">{data.name}</div>
+        <div className="header">
+          <NavLink to="/puzzles">&#60;</NavLink>
+          <div>{data.name}</div>
+          <NavLink onClick={(e) => {
+            e.preventDefault()
+            window.location.reload()
+          }}>↻</NavLink>
+        </div>
         <div className="body">
           <div className="words">
             <input className="active-word" onKeyDown={(e) => {
@@ -165,13 +173,19 @@ export default function Puzzle() {
           <PuzzleBox letters={data.letters} rows={data.dimensions.rows} columns={data.dimensions.columns}></PuzzleBox>
           <div className="lower-buttons">
             <button onClick={(e) => {
-              let enc = encodeURIComponent(CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(data))))
-              navigator.clipboard.writeText(document.location.origin + '/puzzles/share=' + enc);
+              try {
+                let enc = encodeURIComponent(CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(data))))
+                navigator.clipboard.writeText(document.location.origin + '/puzzles/share=' + enc);
+                e.target.innerHTML = "copied to clipboard"
+              }
+              catch {
+                e.target.innerHTML = "error"
+              }
             }}>Share Puzzle</button>
           </div>
         </div>
         <div className="footer">
-          <div>Version 0.2</div>
+          <div>Version 0.2.1</div>
           <div>Dictionary: <strong>{words.length.toLocaleString('en-US')}</strong> words</div>
         </div>
         <div id="popup" className="disabled">

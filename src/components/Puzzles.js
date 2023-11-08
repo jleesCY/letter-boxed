@@ -8,11 +8,15 @@ export default function Puzzles() {
     <>
     <div className="theme light">
       <div className="container">
-        <div className="header">PUZZLES</div>
+        <div className="header">
+          <div></div>
+          <div>Puzzles</div>
+          <div></div>
+        </div>
         <div className="body">
           <div className="main-page-buttons">
-            <NavLink to="" style={{textDecoration: "line-through"}}>Today's Puzzle</NavLink>
-            <NavLink to="/puzzles/random">Random Puzzle</NavLink>
+            <NavLink to="" style={{textDecoration: "line-through"}}>Today's</NavLink>
+            <NavLink to="/puzzles/random">Random</NavLink>
           </div>
             <h3 style={{marginBottom: 0}}>Daily Puzzle Archive (coming soon)</h3>
           <table className="puzzle-list">
@@ -28,7 +32,7 @@ export default function Puzzles() {
           </table>
         </div>
         <div className="footer">
-          <div>Version 0.2</div>
+          <div>Version 0.2.1</div>
           <div>Dictionary: <strong>{words.length.toLocaleString('en-US')}</strong> words</div>
         </div>
       </div>
