@@ -155,7 +155,13 @@ export default function Puzzle() {
         <div id="popup" className="disabled">
           <h3>You Won!</h3>
           <p>The two-word solution was:</p>
-          <p><strong>{data.name}</strong></p></div>
+          <p><strong>{data.name}</strong></p>
+          <button onClick={(e) => {
+            e.target.parentElement.classList.remove("enabled")
+            e.target.parentElement.classList.add("disabled")
+          }}>Close</button>
+          </div>
+          
       </div>
     </div>
   </>
