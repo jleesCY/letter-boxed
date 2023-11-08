@@ -79,7 +79,14 @@ export default function Puzzle() {
     else {
       return(
         <>
-        Puzzle '{id}' does not exist
+        <div className="theme light">
+          <div className="container">
+            <div className="header">oops...</div>
+            <div className="body">
+              <h2>No puzzle named "{id}"</h2>
+            </div>
+          </div>
+        </div>
         </>
       );
     }
