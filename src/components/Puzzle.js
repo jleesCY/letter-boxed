@@ -171,7 +171,7 @@ export default function Puzzle() {
           </div>
         </div>
         <div className="footer">
-          <div>Version 0.1</div>
+          <div>Version 0.2</div>
           <div>Dictionary: <strong>{words.length.toLocaleString('en-US')}</strong> words</div>
         </div>
         <div id="popup" className="disabled">

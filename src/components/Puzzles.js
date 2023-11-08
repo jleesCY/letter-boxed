@@ -28,7 +28,7 @@ export default function Puzzles() {
           </table>
         </div>
         <div className="footer">
-          <div>Version 0.1</div>
+          <div>Version 0.2</div>
           <div>Dictionary: <strong>{words.length.toLocaleString('en-US')}</strong> words</div>
         </div>
       </div>
