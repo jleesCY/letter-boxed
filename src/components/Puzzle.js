@@ -6,8 +6,6 @@ import GeneratePuzzle from "./GeneratePuzzle"
 import words from "../assets/words-guessable.json"
 import Xarrow from "react-xarrows"
 import { createRoot } from 'react-dom/client';
-import Popup from 'react-animated-popup'
-import { useState } from "react"
 import * as CryptoJS from "crypto-js"
 import { NavLink } from "react-router-dom"
 
@@ -67,35 +65,38 @@ export default function Puzzle() {
   let typedWords = [];
   let currWord = 0;
 
-  const [visible, setVisible] = useState(false)
-
   const { id } = useParams();
   let data = null;
-  try {
-    data = require(`../assets/puzzles/${id}.json`);
+  if (id == "random") {
+    data = GeneratePuzzle("Random Puzzle", Math.random().toString())
   }
-  catch {
-    if (id == "random") {
-      data = GeneratePuzzle("Random Puzzle")
-    }
-    else if (id.startsWith("share=")) {
-      let recv = CryptoJS.enc.Base64.parse(decodeURIComponent(id.split("=")[1])).toString(CryptoJS.enc.Utf8)
-      data = JSON.parse(recv)
-    }
-    else {
-      return(
-        <>
-        <div className="theme light">
-          <div className="container">
-            <div className="header">oops...</div>
-            <div className="body">
-              <h2>No puzzle named "{id}"</h2>
-            </div>
+  else if (id == "today") {
+    var date = new Date(Date.now())
+    var dateStr = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '-' + date.getFullYear()
+    var seed = CryptoJS.MD5(dateStr).toString()
+    data = GeneratePuzzle(dateStr, seed)
+  }
+  else if (id.startsWith("share=")) {
+    let recv = CryptoJS.enc.Base64.parse(decodeURIComponent(id.split("=")[1])).toString(CryptoJS.enc.Utf8)
+    data = JSON.parse(recv)
+  }
+  else if (id.startsWith("archive=")) {
+    let recv = CryptoJS.enc.Base64.parse(decodeURIComponent(id.split("=")[1])).toString(CryptoJS.enc.Utf8)
+    data = GeneratePuzzle(recv, CryptoJS.MD5(recv).toString())
+  }
+  else {
+    return(
+      <>
+      <div className="theme light">
+        <div className="container">
+          <div className="header">oops...</div>
+          <div className="body">
+            <h2>No puzzle named "{id}"</h2>
           </div>
         </div>
-        </>
-      );
-    }
+      </div>
+      </>
+    );
   }
   
   return(
@@ -185,7 +186,7 @@ export default function Puzzle() {
           </div>
         </div>
         <div className="footer">
-          <div>Version 0.2.1</div>
+          <div>Version 0.3.0</div>
           <div>Dictionary: <strong>{words.length.toLocaleString('en-US')}</strong> words</div>
         </div>
         <div id="popup" className="disabled">

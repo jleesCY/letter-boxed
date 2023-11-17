@@ -5,6 +5,8 @@ import Puzzle from "./components/Puzzle"
 import MobileLanding from "./components/MobileLanding"
 import NotFound from "./components/NotFound"
 import { isMobile } from 'react-device-detect'
+import GeneratePuzzle from './components/GeneratePuzzle';
+import CryptoJS from 'crypto-js';
 
 function App() {
   if (!isMobile) {

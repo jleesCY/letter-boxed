@@ -1,4 +1,5 @@
 import words from "../assets/words.json"
+import seedrandom from 'seedrandom';
 
 function search(s, state, lastSideId) {
   count++;
@@ -47,12 +48,9 @@ function search(s, state, lastSideId) {
   return null;
 }
 
-function sample(words, verbose) {
-  const w1list = [...words];
-  const w2list = [...words];
-
-  shuffleArray(w1list);
-  shuffleArray(w2list);
+function sample(seed) {
+  const w1list = shuffleArray([...words], seed);
+  const w2list = shuffleArray([...words], [...seed].reverse().join(""));
 
   for (const w1 of w1list) {
     for (const w2 of w2list) {
@@ -75,22 +73,43 @@ function sample(words, verbose) {
   }
 }
 
-function shuffleArray(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+function createRandomGenerator(seed){
+  const a = 5486230734;  // some big numbers
+  const b = 6908969830; 
+  const m = 9853205067;
+  var x = seed;
+  // returns a random value 0 <= num < 1
+  return function(seed = x){  // seed is optional. If supplied sets a new seed
+    x = (seed  * a + b) % m;
+    return x / m;
   }
+}
+
+function stringTo32BitHash(str){
+  var v = 0;
+  for(var i = 0; i < str.length; i += 1){
+    v += str.charCodeAt(i) << (i % 24);
+  }
+  return v % 0xFFFFFFFF;
+}
+
+function shuffleArray(arr,str){
+  var rArr = [];
+  var random = createRandomGenerator(stringTo32BitHash(str));        
+  while(arr.length > 1){
+    rArr.push(arr.splice(Math.floor(random() * arr.length), 1)[0]);
+  }
+  rArr.push(arr[0]);
+  return rArr;
 }
 
 let count = 0; 
 
-export default function GeneratePuzzle(n) {
-  const verbose = false;
-  
-  const [w1, w2, sideAssignments] = sample(words, verbose);
+export default function GeneratePuzzle(name, seed) {
+  const [w1, w2, sideAssignments] = sample(seed);
 
   return({
-    name: n,
+    name: name,
     solution: w1.toUpperCase() + "-" + w2.toUpperCase(), 
     letters: Object.entries(sideAssignments).sort((a, b) => a[1] - b[1]).map(item => item[0].toUpperCase()).join(''),
     dimensions: {
