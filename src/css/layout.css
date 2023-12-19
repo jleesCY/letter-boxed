@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  font-family: scp;
+  font-family: zed;
   height: 100vh;
   width: 100vw;
 }
@@ -27,8 +27,8 @@
   align-items: center;
   margin: auto;
   gap: 1em;
-  margin-top: 3vh;
-  font-size: 1.1em;
+  margin-top: 0.1em;
+  font-size: 1.3em;
 }
 
 .footer {
@@ -62,17 +62,28 @@
 
 .main-page-buttons {
   display: flex;
-  flex-direction: row;
-  width: 50vw;
+  flex-direction: column;
+  width: 15em;
+  gap:1em;
+  align-items: center;
   justify-content: space-around;
 }
 
 .main-page-buttons a {
   text-decoration: none;
   color: black;
-  border: 1px solid black;
+  width: 100%;
+  border: 0.1em solid black;
   padding: 0.2em;
   border-radius: 1em;
+  text-align: center;
+  font-size: 1.5em;
+  background-color: transparent;
+}
+.main-page-buttons a:hover {
+  transition: 0.1s ease;
+  font-weight: bold;
+  box-shadow: 0 0 10px black;
 }
 
 .puzzleBox {
@@ -147,13 +158,13 @@
   text-align: center;
   align-self: center;
   justify-content: center;
-  font-family: scp;
+  font-family: zed;
   font-size: 2em;
   user-select: none;
 }
 
 .words {
-  font-family: scp;
+  font-family: zed;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -199,15 +210,15 @@
 }
 
 #popup {
-  background-color: red;
-  width: 90vw;
+  width: 60vw;
   height: auto;
   position: absolute;
-  top: 25%;
-  left: 5vw;
+  top: 20%;
+  left: 20vw;
   text-align: center;
   border-radius: 1em;
   z-index: 100;
+  font-size: 1.5em
 }
 
 #popup button {

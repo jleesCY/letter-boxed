@@ -40,6 +40,14 @@
   background-color: rgb(190, 146, 255);
 }
 
+.light .toggle-theme {
+  user-select: none;
+  cursor: pointer;
+  border: 2px solid black;
+  border-radius: 1000em;
+  padding:0 0.3em 0 0.3em;
+}
+
 
 
 
@@ -62,4 +70,58 @@
 .dark .circle {
   background-color: rgb(38, 29, 53);
   border-color: white;
+}
+
+.dark .puzzle-list thead {
+  border-bottom: 1px solid white;
+}
+
+.dark .main-page-buttons a {
+  color: white;
+  border-color: white;
+}
+
+.dark .main-page-buttons a:hover {
+  transition: 0.1s ease;
+  font-weight: bold;
+  box-shadow: 0 0 10px white;
+}
+
+.dark .footer {
+  border-top: 2px solid white;
+}
+
+.dark .in-development {
+  border: 2px solid white;
+}
+
+.dark .active-word {
+  border-bottom: 3px solid white;
+}
+
+.dark .share-button {
+  border: 2px solid white
+}
+
+.dark .active {
+  font-weight: bold;
+}
+.dark .active .circle {
+  background-color: rgb(172, 49, 172);
+}
+
+.dark .past {
+  color: rgb(100, 100, 100);
+}
+.dark .past .circle {
+  border-color: rgb(100, 100, 100);
+  background-color: rgb(163, 138, 199)
+}
+
+.dark .toggle-theme {
+  user-select: none;
+  cursor: pointer;
+  border: 2px solid white;
+  border-radius: 1000em;
+  padding:0 0.3em 0 0.3em;
 }

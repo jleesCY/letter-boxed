@@ -8,6 +8,8 @@ import Xarrow from "react-xarrows"
 import { createRoot } from 'react-dom/client';
 import * as CryptoJS from "crypto-js"
 import { NavLink } from "react-router-dom"
+import Version from "./Version"
+import GetTheme, { ToggleTheme } from "./Themes"
 
 let validLetterToType = (char, e, data, lettersTyped) => {
   let letterIdx = data.letters.indexOf(char)
@@ -87,7 +89,7 @@ export default function Puzzle() {
   else {
     return(
       <>
-      <div className="theme light">
+      <div className={"theme " + GetTheme()}>
         <div className="container">
           <div className="header">oops...</div>
           <div className="body">
@@ -101,7 +103,7 @@ export default function Puzzle() {
   
   return(
   <>
-    <div className="theme light">
+    <div className={"theme " + GetTheme()}>
       <div className="container" draggable="false">
         <div className="header">
           <NavLink to="/puzzles">&#60;</NavLink>
@@ -113,7 +115,7 @@ export default function Puzzle() {
         </div>
         <div className="body">
           <div className="words">
-            <input className="active-word" onKeyDown={(e) => {
+            <input autoFocus={true} className="active-word" onKeyDown={(e) => {
               e.preventDefault()
               let key = e.key.toUpperCase()
               if (key == 'ENTER') {
@@ -138,6 +140,7 @@ export default function Puzzle() {
                     }, 300)
                     if (isSolved(letters, data.letters)) {
                       document.querySelector("#popup").classList.remove("disabled");
+                      document.querySelector("#popup").children[2].innerHTML = data.solution
                       document.querySelector("#popup").classList.add("enabled");
                     }
                   }
@@ -173,7 +176,7 @@ export default function Puzzle() {
           </div>
           <PuzzleBox letters={data.letters} rows={data.dimensions.rows} columns={data.dimensions.columns}></PuzzleBox>
           <div className="lower-buttons">
-            <button onClick={(e) => {
+            <button className="share-button" onClick={(e) => {
               try {
                 let enc = encodeURIComponent(CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(data))))
                 navigator.clipboard.writeText(document.location.origin + '/puzzles/share=' + enc);
@@ -186,13 +189,17 @@ export default function Puzzle() {
           </div>
         </div>
         <div className="footer">
-          <div>Version 0.3.0</div>
-          <div>Dictionary: <strong>{words.length.toLocaleString('en-US')}</strong> words</div>
+          <div>Version {Version()}</div>
+          <a className="toggle-theme" onClick={() => {
+            ToggleTheme()
+            window.location.reload()
+            }}
+          >Toggle Theme</a>
         </div>
         <div id="popup" className="disabled">
           <h3>You Won!</h3>
           <p>The two-word solution was:</p>
-          <p><strong>{data.solution}</strong></p>
+          <p></p>
           <button onClick={(e) => {
             e.target.parentElement.classList.remove("enabled")
             e.target.parentElement.classList.add("disabled")
