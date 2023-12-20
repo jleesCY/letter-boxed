@@ -1,29 +1,28 @@
 import Cookies from 'universal-cookie';
-import CryptoJS from 'crypto-js';
+//import CryptoJS from 'crypto-js';
 
 export default function GetTheme() {
   const cookies = new Cookies()
-  console.log("streak-num" in cookies.cookies)
-  if ("theme" in cookies.cookies) {
-    return cookies.get("theme")
+  if ("lttrbxd-theme" in cookies.cookies) {
+    return cookies.get("lttrbxd-theme")
   }
   else {
-    cookies.set("theme", "light", { path: "/" })
+    cookies.set("lttrbxd-theme", "light", { path: "/" })
     return "light"
   }
 }
 
 export function SetTheme(setTo) {
   const cookies = new Cookies()
-  cookies.set("theme", setTo, { path: "/" })
+  cookies.set("lttrbxd-theme", setTo, { path: "/" })
 }
 
 export function ToggleTheme() {
   const cookies = new Cookies()
-  if (cookies.get("theme") == "light") {
-    cookies.set("theme", "dark", { path: "/" })
+  if (cookies.get("lttrbxd-theme") === "light") {
+    cookies.set("lttrbxd-theme", "dark", { path: "/" })
   }
   else {
-    cookies.set("theme", "light", { path: "/" })
+    cookies.set("lttrbxd-theme", "light", { path: "/" })
   }
 }

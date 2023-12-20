@@ -13,13 +13,13 @@ import GetTheme, { ToggleTheme } from "./Themes"
 
 let validLetterToType = (char, e, data, lettersTyped) => {
   let letterIdx = data.letters.indexOf(char)
-  if (letterIdx == -1) {
+  if (letterIdx === -1) {
     return false
   }
-  if (lettersTyped.length == 0) {
+  if (lettersTyped.length === 0) {
     return true
   }
-  if (Math.floor(letterIdx / 3) == Math.floor(data.letters.indexOf(lettersTyped.slice(-1)) / 3)) {
+  if (Math.floor(letterIdx / 3) === Math.floor(data.letters.indexOf(lettersTyped.slice(-1)) / 3)) {
     return false
   }
   else {
@@ -43,7 +43,7 @@ let renderLines = (letters) => {
     line.remove()
   }
   for (let i = 0; i < letters.length; i++) {
-    if (i == letters.length - 1) {
+    if (i === letters.length - 1) {
       document.querySelector(`#${letters[i]}`).parentElement.classList.remove("past")
       document.querySelector(`#${letters[i]}`).parentElement.classList.add("active")
     }
@@ -69,10 +69,10 @@ export default function Puzzle() {
 
   const { id } = useParams();
   let data = null;
-  if (id == "random") {
+  if (id === "random") {
     data = GeneratePuzzle("Random Puzzle", Math.random().toString())
   }
-  else if (id == "today") {
+  else if (id === "today") {
     var date = new Date(Date.now())
     var dateStr = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '-' + date.getFullYear()
     var seed = CryptoJS.MD5(dateStr).toString()
@@ -103,7 +103,7 @@ export default function Puzzle() {
   
   return(
   <>
-    <div className={"theme " + GetTheme()}>
+    <div id="theme-container" className={"theme " + GetTheme()}>
       <div className="container" draggable="false">
         <div className="header">
           <NavLink to="/puzzles">&#60;</NavLink>
@@ -118,7 +118,7 @@ export default function Puzzle() {
             <input autoFocus={true} className="active-word" onKeyDown={(e) => {
               e.preventDefault()
               let key = e.key.toUpperCase()
-              if (key == 'ENTER') {
+              if (key === 'ENTER') {
                 if (e.target.value.length < 3) {
                   e.target.classList.add("shake")
                   setTimeout(() => {
@@ -152,8 +152,8 @@ export default function Puzzle() {
                   }
                 }
               }
-              else if (key == 'BACKSPACE') {
-                if (e.target.value.length == 1 && currWord > 0) {
+              else if (key === 'BACKSPACE') {
+                if (e.target.value.length === 1 && currWord > 0) {
                   currWord -= 1
                   e.target.value = typedWords[currWord]
                   typedWords.pop(currWord)
@@ -190,11 +190,13 @@ export default function Puzzle() {
         </div>
         <div className="footer">
           <div>Version {Version()}</div>
-          <a className="toggle-theme" onClick={() => {
+          <p className="toggle-theme" onClick={() => {
             ToggleTheme()
-            window.location.reload()
+            document.getElementById("theme-container").classList.remove("light")
+            document.getElementById("theme-container").classList.remove("dark")
+            document.getElementById("theme-container").classList.add(GetTheme())
             }}
-          >Toggle Theme</a>
+          >Toggle Theme</p>
         </div>
         <div id="popup" className="disabled">
           <h3>You Won!</h3>

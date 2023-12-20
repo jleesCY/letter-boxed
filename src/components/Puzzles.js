@@ -1,21 +1,21 @@
 import { NavLink } from "react-router-dom";
 import "../css/layout.css"
 import "../css/themes.css"
-import words from "../assets/words-guessable.json"
-import * as CryptoJS from "crypto-js";
+//import words from "../assets/words-guessable.json"
+//import * as CryptoJS from "crypto-js";
 import Version from "./Version";
-import Streak, { UpdateStreakNum } from "./Streak";
+import Streak /*, { UpdateStreakNum }*/ from "./Streak";
 import GetTheme, { ToggleTheme } from "./Themes";
 
 export default function Puzzles() {
-  UpdateStreakNum()
+  //UpdateStreakNum()
   return(
     <>
-    <div className={"theme " + GetTheme()}>
+    <div id="theme-container" className={"theme " + GetTheme()}>
       <div className="container">
         <div className="header">
           <div></div>
-          <div>Puzzles</div>
+          <div>Boxed Letters</div>
           <div></div>
         </div>
         <div className="body">
@@ -48,11 +48,13 @@ export default function Puzzles() {
         </div>
         <div className="footer">
           <div>Version {Version()}</div>
-          <a className="toggle-theme" onClick={() => {
+          <p className="toggle-theme" onClick={() => {
             ToggleTheme()
-            window.location.reload()
+            document.getElementById("theme-container").classList.remove("light")
+            document.getElementById("theme-container").classList.remove("dark")
+            document.getElementById("theme-container").classList.add(GetTheme())
             }}
-          >Toggle Theme</a>
+          >Toggle Theme</p>
         </div>
       </div>
     </div>
