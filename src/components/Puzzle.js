@@ -217,7 +217,10 @@ export default function Puzzle() {
           </div>
         </div>
         <div className="footer">
-          <div>Version {Version()}</div>
+          <p className="help-button" onClick={(e) => {
+            document.getElementById("help-popup").classList.remove("disabled")
+            document.getElementById("help-popup").classList.add("enabled")
+          }}>Help</p>
           <p className="toggle-theme" onClick={() => {
             ToggleTheme()
             document.getElementById("theme-container").classList.remove("light")
@@ -234,7 +237,18 @@ export default function Puzzle() {
             e.target.parentElement.classList.remove("enabled")
             e.target.parentElement.classList.add("disabled")
           }}>Close</button>
-          </div>
+        </div>
+        <div id="help-popup" className="disabled">
+          <h3 style={{paddingLeft: 10}}>How To Play Boxed Letters</h3>
+          <p style={{paddingLeft: 20}}>Your goal is simple: to connect all side letters together using a series of connected words.</p>
+          <p style={{paddingLeft: 20}}>Words you enter must be valid. Criteria for a "valid" entry as as follows:</p>
+          <p style={{paddingLeft: 20}}></p>
+          <p></p>
+          <button onClick={(e) => {
+            e.target.parentElement.classList.remove("enabled")
+            e.target.parentElement.classList.add("disabled")
+          }}>Close</button>
+        </div>
           
       </div>
     </div>

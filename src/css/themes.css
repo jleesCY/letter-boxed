@@ -40,6 +40,12 @@
   background-color: rgb(190, 146, 255);
 }
 
+.light #help-popup {
+  background-color: rgb(255, 255, 255);
+  border-top: 2px solid black;
+  box-shadow: 0 0 10px black;
+}
+
 .light .toggle-theme {
   user-select: none;
   cursor: pointer;
@@ -49,13 +55,29 @@
   margin:0;
 }
 
+.light .share-button {
+  border: 2px solid black
+}
+
+.light .delete-button {
+  border: 2px solid black
+}
+
+.light .enter-button {
+  border: 2px solid black
+}
+
+.light .help-button {
+  border: 2px solid black
+}
+
 
 
 
 
 
 .dark {
-  background-color: rgb(48, 36, 68);
+  background-color: rgb(36, 27, 51);
   color: white;
 }
 
@@ -64,12 +86,12 @@
 }
 
 .dark .connectBox {
-  background-color: rgb(39, 39, 39);
+  background-color: rgb(30, 30, 30);
   border-color: white
 }
 
 .dark .circle {
-  background-color: rgb(38, 29, 53);
+  background-color: rgb(36, 27, 51);
   border-color: white;
 }
 
@@ -112,6 +134,11 @@
   border: 2px solid white
 }
 
+.dark .help-button {
+  border: 2px solid white
+}
+
+
 .dark .active {
   font-weight: bold;
 }
@@ -124,6 +151,16 @@
 }
 
 .dark #popup button {
+  border: 2px solid white;
+}
+
+.dark #help-popup {
+  background-color: rgb(30, 30, 30);
+  border-top: 2px solid white;
+  box-shadow: 0 0 10px white;
+}
+
+.dark #help-popup button {
   border: 2px solid white;
 }
 

@@ -1,9 +1,15 @@
+body {
+  overflow: hidden;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   font-family: zed;
   height: 100vh;
   width: 100vw;
+  user-select: none;
+  overflow: hidden;
 }
 
 .header {
@@ -28,6 +34,7 @@
   margin: auto;
   gap: 1em;
   margin-top: 0.1em;
+  overflow: hidden;
 }
 
 .footer {
@@ -197,6 +204,14 @@
   gap: 0.3em;
 }
 
+.lower-buttons .lower-half {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5em;
+}
+
 .lower-buttons .upper-half .delete-button {
   width: 5em;
   text-align: center;
@@ -211,16 +226,23 @@
 
 .lower-buttons .lower-half .share-button {
   font-size: 1em;
+  display: flex;
   border-radius: 0 0 1em 1em;
   text-align: center;
   padding: 0.2em 1em 0.2em 1em
 }
 
+.help-button {
+  cursor: pointer;
+  all:unset;
+  display: flex;
+  border-radius: 100em 100em 100em 100em;
+  text-align: center;
+  padding: 0.2em 1em 0.2em 1em;
+}
+
 .lower-buttons button {
   all:unset;
-  border: 1px solid black;
-  padding: 0.2em;
-  border-radius: 10em;
   cursor: pointer;
 }
 
@@ -265,6 +287,35 @@
   visibility: hidden;
 }
 
+#help-popup {
+  width: 100vw;
+  position: absolute;
+  max-height: 85vh;
+  left: 0;
+  bottom:0;
+  border-radius: 1em 1em 0 0;
+  z-index: 100;
+  font-size: 1em;
+}
+
+#help-popup button {
+  all:unset;
+  border: 1px solid black;
+  padding: 0.4em;
+  border-radius: 1em;
+  cursor:pointer;
+  margin-bottom: 1.5em;
+}
+
+#help-popup.enabled {
+  visibility: visible;
+  animation: swipe-up 0.3s;
+}
+
+#help-popup.disabled {
+  visibility: hidden;
+}
+
 .shake {
   animation: horizontal-shaking 0.15s ease;
 }
@@ -305,5 +356,14 @@
   100% { 
     opacity: 1; 
     transform: translateY(0)
+  }
+}
+
+@keyframes swipe-up {
+  0% {
+    transform: translateY(1500px)
+  }
+  100% {
+    transform: translateY(1px)
   }
 }
