@@ -217,10 +217,11 @@ export default function Puzzle() {
           </div>
         </div>
         <div className="footer">
-          <p className="help-button" onClick={(e) => {
+          <div>Version {Version()}</div>
+          {/*<p className="help-button" onClick={(e) => {
             document.getElementById("help-popup").classList.remove("disabled")
             document.getElementById("help-popup").classList.add("enabled")
-          }}>Help</p>
+          }}>Help</p>*/}
           <p className="toggle-theme" onClick={() => {
             ToggleTheme()
             document.getElementById("theme-container").classList.remove("light")
