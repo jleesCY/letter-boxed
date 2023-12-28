@@ -24,24 +24,12 @@ export default function Puzzles() {
             <NavLink to="/puzzles/today">Today's Puzzle</NavLink>
             <NavLink to="/puzzles/random">Random Puzzle</NavLink>
           </div>
-            <h3 style={{marginBottom: 0}}>Daily Puzzle Archive (coming soon)</h3>
-          <table className="puzzle-list">
-            <thead>
-              <tr>
-                <td>date</td>
-                <td>link</td>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
           <div className="in-development">
             <h3>Features in development:</h3>
             <ul>
-              <li>Mobile Support</li>
-              <li>Color Themes</li>
+              <li>Different Color Themes</li>
               <li>Daily Puzzle Archive</li>
-              <li>Custom Puzzle Builder</li>
+              <li>Saving Puzzle Progress</li>
               <li>Non-Square Puzzles</li>
             </ul>
           </div>

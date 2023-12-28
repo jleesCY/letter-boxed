@@ -10,8 +10,14 @@ import * as CryptoJS from "crypto-js"
 import { NavLink } from "react-router-dom"
 import Version from "./Version"
 import GetTheme, { ToggleTheme } from "./Themes"
+import { isMobile } from "react-device-detect"
 
-let validLetterToType = (char, e, data, lettersTyped) => {
+let letters = "";
+let typedWords = [];
+let currWord = 0;
+let data = null;
+
+let validLetterToType = (char, data, lettersTyped) => {
   let letterIdx = data.letters.indexOf(char)
   if (letterIdx === -1) {
     return false
@@ -61,14 +67,74 @@ let renderLines = (letters) => {
   }
 }
 
+let handleClick = (e) => {
+  handleKey(e.target.id);
+}
+
+let handleEnter = () => {
+  let target = document.querySelector("#letter-input-box");
+  if (target.value.length < 3) {
+    target.classList.add("shake")
+    setTimeout(() => {
+      target.classList.remove("shake")
+    }, 150)
+    
+  }
+  else {
+    if (words.includes(target.value)) {
+      typedWords.push(target.value);
+      currWord += 1;
+      target.value = typedWords[currWord - 1][typedWords[currWord - 1].length - 1]
+      document.querySelector(".past-words").innerHTML = typedWords.join("-");
+      document.querySelector(".puzzleBox").classList.add("press-in");
+      document.querySelector(".active-word").classList.add("pull-out");
+      setTimeout(() => {
+        document.querySelector(".puzzleBox").classList.remove("press-in")
+        document.querySelector(".active-word").classList.remove("pull-out");
+      }, 300)
+      if (isSolved(letters, data.letters)) {
+        document.querySelector("#popup").classList.remove("disabled");
+        document.querySelector("#popup").children[2].innerHTML = data.solution
+        document.querySelector("#popup").classList.add("enabled");
+      }
+    }
+    else {
+      target.classList.add("shake")
+      setTimeout(() => {
+      target.classList.remove("shake")
+      }, 150)
+    }
+  }
+  renderLines(letters)
+}
+
+let handleBackspace = () => {
+  let target = document.querySelector("#letter-input-box");
+  if (target.value.length === 1 && currWord > 0) {
+    currWord -= 1
+    target.value = typedWords[currWord]
+    typedWords.pop(currWord)
+    document.querySelector(".past-words").innerHTML = typedWords.join("-");
+  }
+  else {
+    target.value = target.value.slice(0, -1)
+    letters = letters.slice(0,-1)
+  }
+  renderLines(letters)
+}
+
+let handleKey = (key) => {
+  let target = document.querySelector("#letter-input-box");
+  if (validLetterToType(key, data, letters)) {
+    target.value += key
+    letters = letters + target.value.slice(-1)
+  }
+  renderLines(letters)
+}
+
 export default function Puzzle() {
 
-  let letters = "";
-  let typedWords = [];
-  let currWord = 0;
-
   const { id } = useParams();
-  let data = null;
   if (id === "random") {
     data = GeneratePuzzle("Random Puzzle", Math.random().toString())
   }
@@ -115,77 +181,39 @@ export default function Puzzle() {
         </div>
         <div className="body">
           <div className="words">
-            <input autoFocus={true} className="active-word" onKeyDown={(e) => {
+            <input id="letter-input-box" autoFocus={true} className="active-word" disabled={isMobile} onKeyDown={(e) => {
               e.preventDefault()
               let key = e.key.toUpperCase()
               if (key === 'ENTER') {
-                if (e.target.value.length < 3) {
-                  e.target.classList.add("shake")
-                  setTimeout(() => {
-                    e.target.classList.remove("shake")
-                  }, 150)
-                  
-                }
-                else {
-                  if (words.includes(e.target.value)) {
-                    typedWords.push(e.target.value);
-                    currWord += 1;
-                    e.target.value = typedWords[currWord - 1][typedWords[currWord - 1].length - 1]
-                    document.querySelector(".past-words").innerHTML = typedWords.join("-");
-                    document.querySelector(".puzzleBox").classList.add("press-in");
-                    document.querySelector(".active-word").classList.add("pull-out");
-                    setTimeout(() => {
-                      document.querySelector(".puzzleBox").classList.remove("press-in")
-                      document.querySelector(".active-word").classList.remove("pull-out");
-                    }, 300)
-                    if (isSolved(letters, data.letters)) {
-                      document.querySelector("#popup").classList.remove("disabled");
-                      document.querySelector("#popup").children[2].innerHTML = data.solution
-                      document.querySelector("#popup").classList.add("enabled");
-                    }
-                  }
-                  else {
-                    e.target.classList.add("shake")
-                    setTimeout(() => {
-                    e.target.classList.remove("shake")
-                    }, 150)
-                  }
-                }
+                handleEnter();
               }
               else if (key === 'BACKSPACE') {
-                if (e.target.value.length === 1 && currWord > 0) {
-                  currWord -= 1
-                  e.target.value = typedWords[currWord]
-                  typedWords.pop(currWord)
-                  document.querySelector(".past-words").innerHTML = typedWords.join("-");
-                }
-                else {
-                  e.target.value = e.target.value.slice(0, -1)
-                  letters = letters.slice(0,-1)
-                }
+                handleBackspace();
               }
               else {
-                if (validLetterToType(key, e, data, letters)) {
-                  e.target.value += key
-                  letters = letters + e.target.value.slice(-1)
-                }
+                handleKey(key);
               }
-              renderLines(letters)
             }}/>
             <div className="past-words"></div>
           </div>
-          <PuzzleBox letters={data.letters} rows={data.dimensions.rows} columns={data.dimensions.columns}></PuzzleBox>
+          <PuzzleBox letters={data.letters} rows={data.dimensions.rows} columns={data.dimensions.columns} handleClick={handleClick}></PuzzleBox>
           <div className="lower-buttons">
-            <button className="share-button" onClick={(e) => {
-              try {
-                let enc = encodeURIComponent(CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(data))))
-                navigator.clipboard.writeText(document.location.origin + '/puzzles/share=' + enc);
-                e.target.innerHTML = "copied to clipboard"
-              }
-              catch {
-                e.target.innerHTML = "error"
-              }
-            }}>Share Puzzle</button>
+            <div className="upper-half">
+              <button className="delete-button" onClick={() => {handleBackspace()}}>Delete</button>
+              <button className="enter-button" onClick={() => {handleEnter()}}>Enter</button>
+            </div>
+            <div className="lower-half">
+              <button className="share-button" onClick={(e) => {
+                try {
+                  let enc = encodeURIComponent(CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(data))))
+                  navigator.clipboard.writeText(document.location.origin + '/puzzles/share=' + enc);
+                  e.target.innerHTML = "copied to clipboard"
+                }
+                catch {
+                  e.target.innerHTML = "error"
+                }
+              }}>Share Puzzle</button>
+            </div>
           </div>
         </div>
         <div className="footer">
